@@ -77,7 +77,7 @@ public class Calculator : MonoBehaviour
     public void Clear()
     {
         label.text = "0";
-        clearPrevInput = false;
+        clearPrevInput = true;
         prevInput = 0;
    
     equationType = EquationType.None;
