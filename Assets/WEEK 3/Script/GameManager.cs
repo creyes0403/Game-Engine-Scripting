@@ -206,11 +206,12 @@ namespace Battleship
             timeLabel.text = string.Format("{0}:{1}", time / 60, (time % 60).ToString("00"));
         }
 
-        Transform UnselectCell()
+       
+        public void UnselectCell()
         {
             row = 0;
             col = 0;
-            gridRoot.GetChild(0).Find("Cursor").;
+            gridRoot.GetChild(0).Find("Cursor");
             
 
         }
@@ -218,7 +219,6 @@ namespace Battleship
         public void Restart()
         {
             UnselectCurrentCell();
-            Transform cell = UnselectCell();
             
             score = 0;
             scoreLabel.text = "0";
