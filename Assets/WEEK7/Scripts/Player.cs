@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -28,6 +29,36 @@ public class Player : MonoBehaviour
     private InputAction fire;
 
     Rigidbody rb;
+
+    public int maxHealth;
+    public HealthBar healthbar;
+
+    private int curHealth;
+
+    private void Start()
+    {
+        curHealth = maxHealth;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Trap"))
+        {
+            TakeDamage(20);
+            Debug.Log($"curHealth={curHealth}");
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        curHealth -= damage;
+        healthbar.UpdateHealth((float)curHealth / (float)maxHealth);
+        //Ciarenn(tutor) helped me to figure out how to restart the scene when the character dies. Thank you!
+        if(curHealth == 0)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
 
     private void Awake()
     {
@@ -160,4 +191,6 @@ public class Player : MonoBehaviour
         Debug.Log("I fired!");
         Instantiate(bulletPrefab, transform.position, Camera.main.transform.rotation);
     }
+
+    
 }
