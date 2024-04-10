@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Coins : MonoBehaviour
 {
+    [SerializeField] GameObject Player;
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Coins");
@@ -14,5 +16,18 @@ public class Coins : MonoBehaviour
             playerInventory.CoinsCollected();
             gameObject.SetActive(false);
         }
+    }
+
+    public void Start()
+    {
+
+        Player.GetComponent<Player>().RestartEvent.AddListener(Restart);
+
+    }
+
+    public void Restart()
+    {
+        gameObject.SetActive(true);
+        Debug.Log("HAHA");
     }
 }

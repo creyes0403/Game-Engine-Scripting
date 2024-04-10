@@ -2,9 +2,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+
+//Sally helped me figure out how to restart the game with the unity event system
 
 public class Player : MonoBehaviour
 {
+    public UnityEvent RestartEvent;
+
+    public GameObject Complete;
+
+    public GameObject GameOver;
+
+    public GameObject GameOverText;
+
     [SerializeField]
     float speed = 5.0f;
     [SerializeField]
@@ -38,6 +49,28 @@ public class Player : MonoBehaviour
     private void Start()
     {
         curHealth = maxHealth;
+
+        RestartEvent = new UnityEvent();
+        RestartEvent.AddListener(Reset);
+        //RestartEvent.AddListener(Coins.Restart())
+    }
+
+    public void Reset()
+    {
+        Debug.Log("Reset");
+        curHealth = maxHealth;
+        healthbar.UpdateHealth(100);
+        Time.timeScale = 1;
+        transform.position = new Vector3(-6,1,-19);
+        Complete.SetActive(false);
+        GameOver.SetActive(false);
+        GameOverText.SetActive(false);
+    }
+
+    
+    public void buttonpress()
+    {
+        RestartEvent.Invoke();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -56,7 +89,10 @@ public class Player : MonoBehaviour
         //Ciarenn(tutor) helped me to figure out how to restart the scene when the character dies. Thank you!
         if(curHealth == 0)
         {
-            SceneManager.LoadScene(0);
+            //SceneManager.LoadScene(0);
+            Time.timeScale = 0;
+            GameOver.SetActive(true);
+            GameOverText.SetActive(true);
         }
     }
 
@@ -101,6 +137,11 @@ public class Player : MonoBehaviour
     {
         HandleHorizontalRotation();
         HandleVerticalRotation();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            RestartEvent.Invoke();
+        }
+        
     }
 
     private void FixedUpdate()
@@ -192,5 +233,12 @@ public class Player : MonoBehaviour
         Instantiate(bulletPrefab, transform.position, Camera.main.transform.rotation);
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag=="Complete")
+        {
+            Complete.SetActive(true);
+            GameOver.SetActive(true);
+        }
+    }
 }

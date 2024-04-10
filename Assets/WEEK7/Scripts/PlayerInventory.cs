@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class PlayerInventory : MonoBehaviour
 {
+    [SerializeField] GameObject Player;
+
     public int numberofcoins { get; private set; }
 
     public UnityEvent<PlayerInventory> OnCoinCollected;
@@ -14,5 +16,18 @@ public class PlayerInventory : MonoBehaviour
     {
         numberofcoins++;
         OnCoinCollected.Invoke(this);
+    }
+
+    public void Start()
+    {
+
+        Player.GetComponent<Player>().RestartEvent.AddListener(Restart);
+
+    }
+
+    public void Restart()
+    {
+        numberofcoins = 0;
+
     }
 }

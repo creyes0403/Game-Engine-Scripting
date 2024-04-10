@@ -9,6 +9,7 @@ TagManager:
   - Coin
   - Interactive Object
   - Trap
+  - Complete
   layers:
   - Default
   - TransparentFX
