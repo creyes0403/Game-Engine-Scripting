@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WEEK5/SCENEW5/MAZE.unity
     guid: e199d07affbf94056baf5e9ed6864c92
+  - enabled: 1
+    path: Assets/WEEK12/Scenes/loadleveldemo.unity
+    guid: 00ffa70746e22444b973f6e864ab0e21
   m_configObjects: {}
